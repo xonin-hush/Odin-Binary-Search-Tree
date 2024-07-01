@@ -6,6 +6,7 @@ class Node {
     this.rightChild = null;
   }
 }
+
 class Tree {
   constructor(array) {
     array.sort((a, b) => a - b);
@@ -22,14 +23,13 @@ class Tree {
 
     return root;
   }
+
   insert(data, currentRoot = this.root) {
     const newNode = new Node(data);
-
     if (!currentRoot) {
       this.root = newNode;
       return;
     }
-
     if (data === currentRoot.data) return;
     if (data > currentRoot.data) {
       if (!currentRoot.rightChild) {
@@ -45,6 +45,20 @@ class Tree {
       }
     }
   }
+
+  find(data, currentRoot = this.root) {
+    if (currentRoot.data == data) {
+      console.log("found it!!", currentRoot);
+    } else if (currentRoot.data < data) {
+      this.find(data, currentRoot.rightChild);
+    } else {
+      this.find(data, currentRoot.leftChild);
+    }
+  }
+
+  // delete(data){
+
+  // }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -68,3 +82,4 @@ L.insert(1);
 L.insert(2);
 L.insert(3);
 prettyPrint(L.root);
+L.find(4)
