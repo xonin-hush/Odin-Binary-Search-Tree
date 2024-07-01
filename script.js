@@ -47,18 +47,23 @@ class Tree {
   }
 
   find(data, currentRoot = this.root) {
+    if (!currentRoot.data) {
+      return null;
+    }
     if (currentRoot.data == data) {
       console.log("found it!!", currentRoot);
+      return currentRoot;
     } else if (currentRoot.data < data) {
-      this.find(data, currentRoot.rightChild);
+      return this.find(data, currentRoot.rightChild);
     } else {
-      this.find(data, currentRoot.leftChild);
+      return this.find(data, currentRoot.leftChild);
     }
   }
 
-  // delete(data){
-
-  // }
+  delete(data) {
+    let node = this.find(data);
+    if (node.rightChild == null && node.leftChild == null) node = null;
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -72,7 +77,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
-L = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+let L = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 L.insert(59);
 L.insert(99);
 L.insert(31);
@@ -81,5 +86,6 @@ L.insert(501);
 L.insert(1);
 L.insert(2);
 L.insert(3);
+// L.find(4)
+L.delete(55);
 prettyPrint(L.root);
-L.find(4)
