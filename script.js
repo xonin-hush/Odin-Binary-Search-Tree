@@ -8,6 +8,7 @@ class Node {
 }
 class Tree {
   constructor(array) {
+    array.sort((a, b) => a - b);
     this.root = this.buildTree(array, 0, array.length - 1);
   }
   buildTree(array, start, end) {
@@ -21,53 +22,30 @@ class Tree {
 
     return root;
   }
-  insert(value, currentRoot = this.root) {
-    const newNode = new Node(value);
+  insert(data, currentRoot = this.root) {
+    const newNode = new Node(data);
 
     if (!currentRoot) {
       this.root = newNode;
       return;
     }
 
-    if (value === currentRoot.value) return;
-    if (value > currentRoot.value) {
-      if (!currentRoot.right) {
+    if (data === currentRoot.data) return;
+    if (data > currentRoot.data) {
+      if (!currentRoot.rightChild) {
         currentRoot.rightChild = newNode;
       } else {
-        this.insert(value, currentRoot.right);
+        this.insert(data, currentRoot.rightChild);
       }
-    } else if (value < currentRoot.value) {
-      if (!currentRoot.left) {
+    } else if (data < currentRoot.data) {
+      if (!currentRoot.leftChild) {
         currentRoot.leftChild = newNode;
       } else {
-        this.insert(value, currentRoot.left);
+        this.insert(data, currentRoot.leftChild);
       }
     }
   }
-  // insert(value, currentRoot = this.root) {
-  //   i++;
-  //   console.log(i);
-  //   console.log(currentRoot,value)
-  //   if (currentRoot.data < value) {
-  //     console.log("what");
-
-  //     if (currentRoot.leftChild) {
-  //       this.insert(value, currentRoot.leftChild);
-  //     } else {
-  //       currentRoot.leftChild = new Node(value);
-  //     }
-  //   } else {
-  //     if (currentRoot.rightChild) {
-  //       this.insert(value, currentRoot.rightChild);
-  //       console.log("wtr");
-  //     } else {
-  //       console.log("trying");
-  //       currentRoot.rightChild = new Node(value);
-  //     }
-  //   }
-  // }
 }
-L = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -80,13 +58,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
-// L.insert(59);
-// L.insert(99);
-// L.insert(31);
-// L.insert(55);
-// L.insert(501);
-// L.insert(1);
-// L.insert(2)
-// L.insert(3)
-
+L = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+L.insert(59);
+L.insert(99);
+L.insert(31);
+L.insert(55);
+L.insert(501);
+L.insert(1);
+L.insert(2);
+L.insert(3);
 prettyPrint(L.root);
