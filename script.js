@@ -18,8 +18,8 @@ class Tree {
     let mid = Math.floor((start + end) / 2); //finding the middle of the array
     let root = new Node(array[mid]); //turning the middle element into a Node and assigning it as root
 
-    root.leftChild = this.buildTree(array, start, mid - 1); //the start of the left child is 0 and the end of it is the mid-1 of the main array
-    root.rightChild = this.buildTree(array, mid + 1, end); //the start of the right child is the mid+1 of the main array and the end of the right child is the end of the main array
+    root.leftChild = this.buildTree(array, start, mid - 1); //the start of the leftChild child is 0 and the end of it is the mid-1 of the main array
+    root.rightChild = this.buildTree(array, mid + 1, end); //the start of the rightChild child is the mid+1 of the main array and the end of the rightChild child is the end of the main array
 
     return root;
   }
@@ -59,11 +59,46 @@ class Tree {
       return this.find(data, currentRoot.leftChild);
     }
   }
-
-  delete(data) {
-    let node = this.find(data);
-    if (node.rightChild == null && node.leftChild == null) node = null;
+  findRoot() {
+    console.log(this.root);
   }
+  delete(root=this.root, data) {
+    // Base case
+    if (root === null)
+        return root;
+
+    // If the data to be deleted is smaller than the root's data, then it lies in the left subtree
+    if (data < root.data)
+        root.leftChild = this.delete(root.leftChild, data);
+    // If the data to be deleted is greater than the root's data, then it lies in the right subtree
+    else if (data > root.data)
+        root.rightChild = this.delete(root.rightChild, data);
+    // If data is same as root's data, then this is the node to be deleted
+    else {
+        // Node with only one child or no child
+        if (root.leftChild === null)
+            return root.rightChild;
+        else if (root.rightChild === null)
+            return root.leftChild;
+
+        // Node with two children: Get the inorder successor (smallest in the right subtree)
+        root.data = this.minValue(root.rightChild);
+
+        // Delete the inorder successor
+        root.right = this.delete(root.rightChild, root.data);
+    }
+    return root;
+}
+
+minValue(node) {
+    let minv = node.data;
+    while (node.leftChild !== null) {
+        minv = node.leftChild.data;
+        node = node.leftChild;
+    }
+    return minv;
+}
+
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -77,15 +112,10 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
     prettyPrint(node.leftChild, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 };
-let L = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-L.insert(59);
-L.insert(99);
-L.insert(31);
-L.insert(55);
-L.insert(501);
-L.insert(1);
-L.insert(2);
-L.insert(3);
-// L.find(4)
-L.delete(55);
+let L = new Tree([
+  23, 8, 4, 5, 7, 9, 67, 6345, 324, 59, 99, 31, 55, 501, 1, 2, 3,
+]);
+L.findRoot()
+L.delete(L.root,23)
 prettyPrint(L.root);
+
