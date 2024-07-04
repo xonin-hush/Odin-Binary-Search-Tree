@@ -6,7 +6,6 @@ class Node {
     this.rightChild = null;
   }
 }
-
 class Tree {
   constructor(array) {
     array.sort((a, b) => a - b);
@@ -62,43 +61,58 @@ class Tree {
   findRoot() {
     console.log(this.root);
   }
-  delete(root=this.root, data) {
+  delete(root = this.root, data) {
     // Base case
-    if (root === null)
-        return root;
+    if (root === null) return root;
 
     // If the data to be deleted is smaller than the root's data, then it lies in the left subtree
-    if (data < root.data)
-        root.leftChild = this.delete(root.leftChild, data);
+    if (data < root.data) root.leftChild = this.delete(root.leftChild, data);
     // If the data to be deleted is greater than the root's data, then it lies in the right subtree
     else if (data > root.data)
-        root.rightChild = this.delete(root.rightChild, data);
+      root.rightChild = this.delete(root.rightChild, data);
     // If data is same as root's data, then this is the node to be deleted
     else {
-        // Node with only one child or no child
-        if (root.leftChild === null)
-            return root.rightChild;
-        else if (root.rightChild === null)
-            return root.leftChild;
+      // Node with only one child or no child
+      if (root.leftChild === null) return root.rightChild;
+      else if (root.rightChild === null) return root.leftChild;
 
-        // Node with two children: Get the inorder successor (smallest in the right subtree)
-        root.data = this.minValue(root.rightChild);
+      // Node with two children: Get the inorder successor (smallest in the right subtree)
+      root.data = this.minValue(root.rightChild);
 
-        // Delete the inorder successor
-        root.right = this.delete(root.rightChild, root.data);
+      // Delete the inorder successor
+      root.right = this.delete(root.rightChild, root.data);
     }
     return root;
-}
+  }
 
-minValue(node) {
+  minValue(node) {
     let minv = node.data;
     while (node.leftChild !== null) {
-        minv = node.leftChild.data;
-        node = node.leftChild;
+      minv = node.leftChild.data;
+      node = node.leftChild;
     }
     return minv;
-}
+  }
 
+ 
+  levelOrder(node = this.root, queue = [node], values = []) {
+    console.log(queue);
+    if (!node || queue.length === 0) return;
+
+    const currentNode = queue.shift();
+
+    values.push(currentNode.data);
+
+    if (currentNode.leftChild) {
+      queue.push(currentNode.leftChild);
+    }
+
+    if (currentNode.rightChild) {
+      queue.push(currentNode.rightChild);
+    }
+    this.levelOrder(node, queue, values);
+    return values.join(" -> ");
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -115,7 +129,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let L = new Tree([
   23, 8, 4, 5, 7, 9, 67, 6345, 324, 59, 99, 31, 55, 501, 1, 2, 3,
 ]);
-L.findRoot()
-L.delete(L.root,23)
+L.findRoot();
+// L.delete(L.root, 31);
+// L.levelOrder(L.root);
+console.log(L.levelOrder())
 prettyPrint(L.root);
-
