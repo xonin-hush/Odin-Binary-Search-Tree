@@ -130,15 +130,15 @@ class Tree {
       this.preOrder(root.rightChild);
     }
   }
-  // postOrder(root = this.root) {
-    // if (root.leftChild) {
-      // this.postOrder(root.leftChild);
-    // }
-    // if (root.rightChild) {
-      // this.postOrder(root.rightChild);
-    // }
-    // console.log(root.data);
-  // }
+  postOrder(root = this.root) {
+    if (root.leftChild) {
+      this.postOrder(root.leftChild);
+    }
+    if (root.rightChild) {
+      this.postOrder(root.rightChild);
+    }
+    console.log(root.data);
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
