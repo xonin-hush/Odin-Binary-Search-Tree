@@ -94,7 +94,6 @@ class Tree {
     return minv;
   }
 
- 
   levelOrder(node = this.root, queue = [node], values = []) {
     console.log(queue);
     if (!node || queue.length === 0) return;
@@ -113,15 +112,33 @@ class Tree {
     this.levelOrder(node, queue, values);
     return values.join(" -> ");
   }
-  inOrder(root=this.root){
-    if(root.leftChild){
-      this.inOrder(root.leftChild)
+  inOrder(root = this.root) {
+    if (root.leftChild) {
+      this.inOrder(root.leftChild);
     }
-    console.log(root.data)
-    if(root.rightChild){
-      this.inOrder(root.rightChild)
+    console.log(root.data);
+    if (root.rightChild) {
+      this.inOrder(root.rightChild);
     }
   }
+  preOrder(root = this.root) {
+    console.log(root.data);
+    if (root.leftChild) {
+      this.preOrder(root.leftChild);
+    }
+    if (root.rightChild) {
+      this.preOrder(root.rightChild);
+    }
+  }
+  // postOrder(root = this.root) {
+    // if (root.leftChild) {
+      // this.postOrder(root.leftChild);
+    // }
+    // if (root.rightChild) {
+      // this.postOrder(root.rightChild);
+    // }
+    // console.log(root.data);
+  // }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -142,5 +159,7 @@ L.findRoot();
 // L.delete(L.root, 31);
 // L.levelOrder(L.root);
 // console.log(L.levelOrder())
-L.inOrder()
+L.inOrder();
+L.preOrder();
+L.postOrder();
 prettyPrint(L.root);
