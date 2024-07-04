@@ -161,6 +161,22 @@ class Tree {
       console.log("height is: ", 0);
     }
   }
+  depth(data, currentRoot = this.root,i=0) {
+    if (!currentRoot.data) {
+      return null;
+    }
+    if (currentRoot.data == data) {
+      console.log(i)
+      // console.log("found it!!", currentRoot);
+      return currentRoot;
+    } else if (currentRoot.data < data) {
+      i++
+      return this.depth(data, currentRoot.rightChild,i);
+    } else {
+      i++
+      return this.depth(data, currentRoot.leftChild,i);
+    }
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -183,5 +199,6 @@ let L = new Tree([
 // L.inOrder();
 // L.preOrder();
 // L.postOrder()
-L.height(5);
+L.depth(9)
+// L.height(5);
 prettyPrint(L.root);
