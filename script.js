@@ -113,6 +113,15 @@ class Tree {
     this.levelOrder(node, queue, values);
     return values.join(" -> ");
   }
+  inOrder(root=this.root){
+    if(root.leftChild){
+      this.inOrder(root.leftChild)
+    }
+    console.log(root.data)
+    if(root.rightChild){
+      this.inOrder(root.rightChild)
+    }
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -132,5 +141,6 @@ let L = new Tree([
 L.findRoot();
 // L.delete(L.root, 31);
 // L.levelOrder(L.root);
-console.log(L.levelOrder())
+// console.log(L.levelOrder())
+L.inOrder()
 prettyPrint(L.root);
