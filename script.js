@@ -58,9 +58,6 @@ class Tree {
       return this.find(data, currentRoot.leftChild);
     }
   }
-  findRoot() {
-    console.log(this.root);
-  }
   delete(root = this.root, data) {
     // Base case
     if (root === null) return root;
@@ -139,6 +136,31 @@ class Tree {
     }
     console.log(root.data);
   }
+  height(data) {
+    let l = 0;
+    let r = 0;
+    const firstNode = this.find(data);
+    if (this.root == null) {
+      return;
+    }
+    let node = firstNode;
+    while (node.leftChild != null) {
+      l++;
+      node = node.leftChild;
+    }
+    node = firstNode;
+    while (node.rightChild != null) {
+      r++;
+      node = node.rightChild;
+    }
+    if (r > l) {
+      console.log("height is: ", r);
+    } else if (r < l) {
+      console.log("height is: ", l);
+    } else {
+      console.log("height is: ", 0);
+    }
+  }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -153,13 +175,13 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 let L = new Tree([
-  23, 8, 4, 5, 7, 9, 67, 6345, 324, 59, 99, 31, 55, 501, 1, 2, 3,
+  23, 8, 4, 5, 7, 9, 67, 6345, 324, 59, 99, 31, 55, 501, 1, 2, 3, 60, 61, 56,
 ]);
-L.findRoot();
 // L.delete(L.root, 31);
 // L.levelOrder(L.root);
 // console.log(L.levelOrder())
-L.inOrder();
-L.preOrder();
-L.postOrder();
+// L.inOrder();
+// L.preOrder();
+// L.postOrder()
+L.height(5);
 prettyPrint(L.root);
