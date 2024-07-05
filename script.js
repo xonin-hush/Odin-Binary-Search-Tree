@@ -182,14 +182,7 @@ class Tree {
       return this.depth(data, currentRoot.leftChild, i);
     }
   }
-  checkBalance(root = this.root) {
-    if (!root) return true;
-    const leftHeight = this.height(root.leftChild);
-    const rightHeight = this.height(root.rightChild);
-    if (Math.abs(leftHeight - rightHeight) > 1) {
-      console.log("balanced");
-    }
-  }
+ 
   reBalance() {
     values1 = [];
     this.inOrder();
@@ -223,6 +216,5 @@ let L = new Tree([
 // L.depth(9);
 // L.find(5);
 // L.height(5);
-// L.checkBalance();
 L.reBalance();
 prettyPrint(L.root);
