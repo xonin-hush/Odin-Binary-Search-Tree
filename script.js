@@ -6,6 +6,7 @@ class Node {
     this.rightChild = null;
   }
 }
+values1 = [];
 class Tree {
   constructor(array) {
     array.sort((a, b) => a - b);
@@ -114,6 +115,7 @@ class Tree {
       this.inOrder(root.leftChild);
     }
     console.log(root.data);
+    values1.push(root.data);
     if (root.rightChild) {
       this.inOrder(root.rightChild);
     }
@@ -155,27 +157,46 @@ class Tree {
     }
     if (r > l) {
       console.log("height is: ", r);
+      return r;
     } else if (r < l) {
       console.log("height is: ", l);
+      return l;
     } else {
       console.log("height is: ", 0);
+      return 0;
     }
   }
-  depth(data, currentRoot = this.root,i=0) {
+  depth(data, currentRoot = this.root, i = 0) {
     if (!currentRoot.data) {
       return null;
     }
     if (currentRoot.data == data) {
-      console.log(i)
+      console.log(i);
       // console.log("found it!!", currentRoot);
       return currentRoot;
     } else if (currentRoot.data < data) {
-      i++
-      return this.depth(data, currentRoot.rightChild,i);
+      i++;
+      return this.depth(data, currentRoot.rightChild, i);
     } else {
-      i++
-      return this.depth(data, currentRoot.leftChild,i);
+      i++;
+      return this.depth(data, currentRoot.leftChild, i);
     }
+  }
+  checkBalance(root = this.root) {
+    if (!root) return true;
+    const leftHeight = this.height(root.leftChild);
+    const rightHeight = this.height(root.rightChild);
+    if (Math.abs(leftHeight - rightHeight) > 1) {
+      console.log("balanced");
+    }
+  }
+  reBalance() {
+    values1 = [];
+    this.inOrder();
+    // console.log(values1)
+    this.root = this.buildTree(values1, 0, values1.length - 1);
+    console.log("rebalanced")
+    // this.root=this.buildTree(values,0,values.length-1)
   }
 }
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -199,6 +220,9 @@ let L = new Tree([
 // L.inOrder();
 // L.preOrder();
 // L.postOrder()
-L.depth(9)
+// L.depth(9);
+// L.find(5);
 // L.height(5);
+// L.checkBalance();
+L.reBalance();
 prettyPrint(L.root);
